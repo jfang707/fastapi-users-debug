@@ -12,6 +12,7 @@ from fastapi_users.exceptions import UserAlreadyExists
 from fastapi_users.jwt import SecretType, decode_jwt, generate_jwt
 from fastapi_users.manager import BaseUserManager, UserManagerDependency
 from fastapi_users.router.common import ErrorCode, ErrorModel
+import logging
 
 STATE_TOKEN_AUDIENCE = "fastapi-users:oauth-state"
 
@@ -106,6 +107,7 @@ def get_oauth_router(
         user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),
         strategy: Strategy[models.UP, models.ID] = Depends(backend.get_strategy),
     ):
+        logging.debug(request)
         token, state = access_token_state
         account_id, account_email = await oauth_client.get_id_email(
             token["access_token"]
