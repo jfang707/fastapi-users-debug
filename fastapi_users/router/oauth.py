@@ -111,6 +111,7 @@ def get_oauth_router(
             token["access_token"]
         )
 
+
         if account_email is None:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -120,7 +121,7 @@ def get_oauth_router(
         try:
             decode_jwt(state, state_secret, [STATE_TOKEN_AUDIENCE])
         except jwt.DecodeError:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Decode Error")
 
         try:
             user = await user_manager.oauth_callback(
