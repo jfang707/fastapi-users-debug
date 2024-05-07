@@ -43,7 +43,9 @@ extend-select = ["UP", "TRY"]
 allow-direct-references = true
 
 [tool.hatch.version]
-path = "temporary/__init__.py"
+source = "regex_commit"
+commit_extra_args = ["-e"]
+path = "fastapi_users/__init__.py"
 
 [tool.hatch.envs.default]
 installer = "uv"
@@ -113,7 +115,7 @@ matrix.pydantic.extra-dependencies = [
 support-legacy = true  # Create setup.py
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-regex-commit"]
 build-backend = "hatchling.build"
 
 [project]
